@@ -1,0 +1,37 @@
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-md-offset-2 col-sm-6 col-xs-12">
+<h2> Details of the Event </h2>
+<p>
+  <strong>Title:</strong>
+  <%= @event.title %>
+</p>
+<p>
+  <strong>Location:</strong>
+  <%= @event.location %>
+</p>
+<p>
+  <strong>Date:</strong>
+  <%= @event.date %>
+</p>
+ 
+<p>
+  <strong>Description:</strong>
+  <%= @event.description %>
+</p>
+<p>
+  <strong>Event Type:</strong>
+  <%= @event.eventtype %>
+</p>
+
+<p>
+  <strong>Publish:</strong>
+  <%= @event.publish %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event),class:"btn btn-info" %>
+<%= link_to 'Back to Events List', events_path,class:"btn btn-info" %>
+
+</div>
+</div>
+</div>

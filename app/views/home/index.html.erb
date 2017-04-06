@@ -1,0 +1,25 @@
+<div class="slider">
+   <%= render '/layouts/slider' %>
+   </div>
+ <div class="content">
+
+   
+<% @events.each do |event| %>
+	
+<% if event.publish %>
+<div class="panel panel-default col-md-4">
+ <div class="panel-heading"><%= event.title %></div>
+  <div class="panel-body">
+  Event Date:<%=event.date %><br/>
+ Event Location:<%=event.location %><br/>
+  
+  </div>
+   <div class="panel-footer"> <div class="btn btn-primary">Attent Event</div></div>
+</div>
+
+<% end %>
+ <% end %>
+
+</div>
+
+
