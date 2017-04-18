@@ -1,0 +1,53 @@
+
+<div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-md-offset-2 col-sm-6 col-xs-12">
+ 
+<p id="notice"><%= notice %></p>
+ <% if(current_user.role.id==1) %>
+ <h3> List of All Events </h3>
+ <% elsif(current_user.role.id==2) %>
+ <h2>List of Events Created by <%=current_user.email%> </h2>
+ <p>
+<%= link_to 'Create New Event', new_event_path,class:"btn btn-default"%>
+</p>
+ <% else %>
+ <h2>List of Events Registered by <%=current_user.email%> </h2>
+ <% end %>
+ 
+<table class="table">
+<thead>
+  <tr>
+    <th>Title</th>
+    <th>Location</th>
+    <th>Date</th>
+     <th>EventType</th>
+    <th>Publish</th>
+    <th></th>
+  </tr>
+ </thead>
+  <tbody>
+  <% @events.each do |event| %>
+
+    <tr>
+      <td><%= event.title %></td>
+      <td><%= event.event_location.try(:name) %></td>
+      <td><%= event.date %></td>
+        <td><%= event.eventtype %></td>
+        <td><%= event.publish %></td>
+           <td>
+           <%= link_to 'Details', event_path(event),class:"btn btn-info" %> 
+          
+                  </td>
+       
+  <% end %>
+  </tbody>
+</table>
+<div class=col-md-6 offset-md-3>
+<%= paginate @events %>
+<div>
+</div>
+</div>
+</div>
+
+ 
