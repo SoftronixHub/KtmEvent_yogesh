@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406103601) do
+ActiveRecord::Schema.define(version: 20170412130218) do
 
   create_table "blogs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "title"
@@ -24,13 +24,33 @@ ActiveRecord::Schema.define(version: 20170406103601) do
   create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "title"
     t.text     "description", limit: 65535
-    t.string   "location"
     t.date     "date"
     t.boolean  "publish"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.string   "eventtype"
     t.integer  "created_by"
+    t.integer  "location_id"
+  end
+
+  create_table "events_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "event_id", null: false
+    t.integer "user_id",  null: false
+  end
+
+  create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.decimal  "latitude",                    precision: 10, scale: 8
+    t.decimal  "longitude",                   precision: 11, scale: 8
+    t.text     "contactdetail", limit: 65535
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
+
+  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -46,6 +66,7 @@ ActiveRecord::Schema.define(version: 20170406103601) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "role_id"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

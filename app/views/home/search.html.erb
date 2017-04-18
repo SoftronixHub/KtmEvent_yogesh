@@ -1,1 +1,38 @@
-<p> Sorry we could not find anything! </p>
+ 
+<div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-md-offset-2 col-sm-6 col-xs-12">
+ 
+ 
+<table class="table">
+<thead>
+  <tr>
+    <th>Title</th>
+    <th>Location</th>
+    <th>Date</th>
+     <th>EventType</th>
+    <th>Publish</th>
+  </tr>
+ </thead>
+  <tbody>
+  <% @events.each do |event| %>
+
+    <tr>
+      <td><%= event.title %></td>
+      <td><%= event.event_location.try(:name) %></td>
+       <td><%= event.date %></td>
+   
+        <td><%= event.eventtype %></td>
+             <td><%= event.publish %></td>
+      <td><%= link_to 'Details', event_path(event),class:"btn btn-info" %></td>
+           
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @events %>
+</div>
+</div>
+</div>
+
+ 

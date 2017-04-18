@@ -11,10 +11,12 @@
  <div class="panel-heading"><%= event.title %></div>
   <div class="panel-body">
   Event Date:<%=event.date %><br/>
- Event Location:<%=event.location %><br/>
+ Event Location:<%=event.event_location.try(:name) %><br/>
   
   </div>
-   <div class="panel-footer"> <div class="btn btn-primary">Attent Event</div></div>
+   <div class="panel-footer"> <div class="btn btn-default"> 
+    <%= link_to 'View Details',event %>
+   </div></div>
 </div>
 
 <% end %>

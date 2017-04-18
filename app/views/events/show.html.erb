@@ -1,37 +1,75 @@
  <div class="container-fluid">
   <div class="row">
-   <div class="col-md-6 col-md-offset-2 col-sm-6 col-xs-12">
-<h2> Details of the Event </h2>
-<p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
-<p>
-  <strong>Location:</strong>
-  <%= @event.location %>
-</p>
-<p>
-  <strong>Date:</strong>
-  <%= @event.date %>
-</p>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h2> Details of the Event </h2>
+      <p>
+        <strong>Title:</strong>
+        <%= @event.title %>
+      </p>
+      <p>
+        <strong>Location:</strong>
+        <%= @event.event_location.try(:name) %>
+      </p>
+      <p>
+        <strong>Date:</strong>
+        <%= @event.date %>
+      </p>
+
+      <p>
+        <strong>Description:</strong>
+        <%= @event.description %>
+      </p>
+      <p>
+        <strong>Event Type:</strong>
+        <%= @event.eventtype %>
+      </p>
+
+      <p>
+        <strong>Publish:</strong>
+        <%= @event.publish %>
+      </p>
+      <% if current_user.role.id==3 && @event.is_already_attended?( current_user )%>
+      <%= link_to 'Leave Event', leave_path(@event), class:"btn btn-info", method: 'put' %>
+      <%elsif current_user.role.id==3 && @event.is_already_attended?( current_user)==false%>  
+      <%= link_to 'Attain Event', attain_path(@event), class:"btn btn-info", method: 'put' %>
+      <%end%>
+      <%if(current_user.role.id==1 || current_user.role.id==2) %>
+      <%= link_to 'Edit', edit_event_path(@event),class:"btn btn-info" %>
+       <%= link_to 'Delete', @event,method: :delete, data: {confirm: 'Are you Sure?'},class:"btn btn-info" %>
+        <%end%>
+      <%= link_to 'Back to Events List', dashboard_path,class:"btn btn-info" %>
+   
+    </div>
+    <%if(current_user.role.id==1 || current_user.role.id==2) %>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <h2>Event Attendees</h2>
+      <% @event.users.each do |user| %>
+        Email: <%= user.email %></br>
+      <%end%>
+    </div>
+    <%end%>
+    <div class='row'>
+    <div id="googleMap" style="width:90%;height:400px;"></div>
+
+<script>
+function myMap() {
+  var lat=<%= @event.event_location.try(:latitude) %>;
+  var long=<%= @event.event_location.try(:longitude) %>
+
+ var myCenter = new google.maps.LatLng(lat,long);
+  var mapCanvas = document.getElementById("googleMap");
+  var mapOptions = {center: myCenter, zoom: 15};
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  var marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+
+
  
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
-<p>
-  <strong>Event Type:</strong>
-  <%= @event.eventtype %>
-</p>
+}
+</script>
 
-<p>
-  <strong>Publish:</strong>
-  <%= @event.publish %>
-</p>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBT6Jwm1m7iRbf6K1X7xZh2VFIA1sExnuc &callback=myMap"></script>
 
-<%= link_to 'Edit', edit_event_path(@event),class:"btn btn-info" %>
-<%= link_to 'Back to Events List', events_path,class:"btn btn-info" %>
-
-</div>
-</div>
+    </div>
+  </div>
 </div>
