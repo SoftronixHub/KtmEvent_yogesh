@@ -22,7 +22,7 @@
   </div>
    <div class="field">
     <%= label_tag("User Type") %><br />
-    <%= f.select :role_id,[['EventHost',2],['EventAttendee',3]] %>
+     <%= f.collection_select :role_id, Role.where.not(id:1), :id, :name %>
   </div>
 
   <div class="actions">
